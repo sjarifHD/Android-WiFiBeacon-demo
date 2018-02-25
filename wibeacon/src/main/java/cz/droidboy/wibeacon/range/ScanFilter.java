@@ -36,6 +36,7 @@ public class ScanFilter {
         if (mac != null && mac.length() > 17) {
             throw new IllegalArgumentException("Mac longer than 17 chars");
         }
+
         if (ssid != null && ssid.length() > 32) {
             throw new IllegalArgumentException("SSID longer than 32 chars");
         }
@@ -43,9 +44,11 @@ public class ScanFilter {
         if (mac != null) {
             this.mac = mac.toLowerCase();
         }
+
         if (ssid != null) {
             this.ssid = ssid.toLowerCase();
         }
+
         this.channels = channels;
         this.proximity = proximity;
     }
@@ -58,12 +61,15 @@ public class ScanFilter {
         if (mac != null && !mac.equalsIgnoreCase(scanResult.BSSID)) {
             return false;
         }
+
         if (ssid != null && !ssid.equalsIgnoreCase(scanResult.SSID)) {
             return false;
         }
+
         if (channels != null && !channels.contains(WifiUtils.toChannel(scanResult.frequency))) {
             return false;
         }
+
         return !(proximity != null && proximity != ProximityUtils.getProximity(scanResult.level, scanResult.frequency));
     }
 
@@ -75,13 +81,47 @@ public class ScanFilter {
         if (mac != null && !scanResult.BSSID.toLowerCase().startsWith(mac)) {
             return false;
         }
+
         if (ssid != null && !scanResult.SSID.toLowerCase().startsWith(ssid)) {
             return false;
         }
+
         if (channels != null && !channels.contains(WifiUtils.toChannel(scanResult.frequency))) {
             return false;
         }
-        return !(proximity != null && proximity != ProximityUtils.getProximity(scanResult.level, scanResult.frequency));
 
+        return !(proximity != null && proximity != ProximityUtils.getProximity(scanResult.level, scanResult.frequency));
+    }
+
+    public static class Builder {
+
+        private String mac;
+        private String ssid;
+        private Set<Integer> channels;
+        private Proximity proximity;
+
+        public Builder setMac(String mac) {
+            this.mac = mac;
+            return this;
+        }
+
+        public Builder setSsid(String ssid) {
+            this.ssid = ssid;
+            return this;
+        }
+
+        public Builder setChannels(Set<Integer> channels) {
+            this.channels = channels;
+            return this;
+        }
+
+        public Builder setProximity(Proximity proximity) {
+            this.proximity = proximity;
+            return this;
+        }
+
+        public ScanFilter build() {
+            return new ScanFilter(mac, ssid, channels, proximity);
+        }
     }
 }

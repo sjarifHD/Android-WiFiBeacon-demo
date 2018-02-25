@@ -1,11 +1,14 @@
 package cz.droidboy.wifibeacon;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,5 +51,4 @@ public class BaseActivity extends Activity {
         DialogFragment newFragment = new ActivateWiFiDialogFragment();
         newFragment.show(ft, ActivateWiFiDialogFragment.TAG);
     }
-
 }

@@ -1,7 +1,11 @@
 package cz.droidboy.wifibeacon;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.wifi.ScanResult;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,7 @@ import cz.droidboy.wibeacon.range.ScanFilter;
  * @author Jonas Sevcik
  */
 public class MainActivity extends BaseActivity implements ProximityScanner.RangingListener {
+    private static final int PERMISSION_REQUEST_CODE = 101;
 
     private ProximityScanner scanner;
     private APAdapter adapter;
@@ -26,6 +31,15 @@ public class MainActivity extends BaseActivity implements ProximityScanner.Rangi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (!checkPermission()) {
+                String[] permission = {Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                };
+                requestPermissionsSafely(permission, PERMISSION_REQUEST_CODE);
+            }
+        }
 
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setEmptyView(findViewById(android.R.id.empty));
@@ -73,4 +87,23 @@ public class MainActivity extends BaseActivity implements ProximityScanner.Rangi
             return super.onOptionsItemSelected(item);
         }
     }
+
+    private boolean checkPermission() {
+        return hasPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+                && hasPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void requestPermissionsSafely(String[] permissions, int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public boolean hasPermission(String permission) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
 }
