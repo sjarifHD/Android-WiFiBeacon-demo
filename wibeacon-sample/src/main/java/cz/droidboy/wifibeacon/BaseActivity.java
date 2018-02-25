@@ -29,7 +29,7 @@ public class BaseActivity extends Activity {
     protected void onStart() {
         super.onStart();
 
-        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (Build.VERSION.SDK_INT >= 18) {
             if (!wifiManager.isScanAlwaysAvailable()) {

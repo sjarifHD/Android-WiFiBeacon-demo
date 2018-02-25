@@ -15,7 +15,7 @@ public class ActivateServiceReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(action) || WifiManager.WIFI_STATE_CHANGED_ACTION.equals(action)) {
-            WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifiManager = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if (wifiManager.isWifiEnabled() || Build.VERSION.SDK_INT >= 18 && wifiManager.isScanAlwaysAvailable()) {
                 context.startService(new Intent(context, WiFiDetectionService.class));
             }

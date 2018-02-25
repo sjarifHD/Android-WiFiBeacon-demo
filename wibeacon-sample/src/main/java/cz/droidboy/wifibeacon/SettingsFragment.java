@@ -71,7 +71,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         Activity activity = getActivity();
-        WifiManager manager = (WifiManager) activity.getSystemService(Context.WIFI_SERVICE);
+        WifiManager manager = (WifiManager) activity.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (manager.isWifiEnabled()) {
             Intent intent = new Intent(activity, WiFiDetectionService.class);
             intent.putExtra(WiFiDetectionService.UPDATE_COMMAND_KEY, WiFiDetectionService.UPDATE_COMMAND);

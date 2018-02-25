@@ -72,7 +72,7 @@ public class ContinuousReceiver extends BroadcastReceiver {
         mContext = context.getApplicationContext();
         mListener = listener;
         mScanInterval = scanInterval;
-        mManager = (WifiManager) mContext.getSystemService(Context.WIFI_SERVICE);
+        mManager = (WifiManager) mContext.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ActivateWiFiDialogFragment extends DialogFragment {
                 .setPositiveButton(getString(R.string.alert_dialog_ok),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+                                WifiManager wifiManager = (WifiManager) getActivity().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
                                 wifiManager.setWifiEnabled(true);
                             }
                         }

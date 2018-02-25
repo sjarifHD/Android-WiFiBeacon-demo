@@ -90,7 +90,7 @@ public class WiFiDetectionService extends Service implements ProximityMonitor.Mo
     }
 
     private void acquireWifiLock() {
-        WifiManager manager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiManager manager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mWifiLock = manager.createWifiLock(WifiManager.WIFI_MODE_SCAN_ONLY, TAG);
         mWifiLock.setReferenceCounted(false);
         mWifiLock.acquire();
